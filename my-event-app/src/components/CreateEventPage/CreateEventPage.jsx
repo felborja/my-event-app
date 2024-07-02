@@ -1,15 +1,11 @@
 import React from "react";
-import Navigation from "../common/Navigation";
 import EventForm from "./EventForm";
 
 function CreateEventPage() {
   return (
-    <div>
-      <Navigation isLoggedIn={true} />
-      <div className="create-event-page">
-        <h2>Create Event</h2>
-        <EventForm />
-      </div>
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl mb-4">Create Event</h2>
+      <EventForm />
     </div>
   );
 }

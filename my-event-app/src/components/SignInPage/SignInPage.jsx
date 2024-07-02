@@ -1,11 +1,15 @@
 import React from "react";
 import SignInForm from "./SignInForm";
+import MinimalFooter from "../common/MinimalFooter";
 
 function SignInPage() {
   return (
-    <div className="signin-page">
-      <h2>Sign In</h2>
-      <SignInForm />
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-grow container mx-auto p-4">
+        <h2 className="text-2xl m-4">Sign In</h2>
+        <SignInForm />
+      </div>
+      <MinimalFooter />
     </div>
   );
 }

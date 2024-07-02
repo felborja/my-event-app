@@ -12,18 +12,18 @@ function EventDetails() {
   };
 
   return (
-    <div className="event-details">
-      <img src={event.image} alt={event.title} />
-      <h2>{event.title}</h2>
-      <p>Date: {event.date}</p>
-      <p>Location: {event.location}</p>
-      <p>
+    <div className="event-details mt-4">
+      <img src={event.image} alt={event.title} className="rounded shadow-lg" />
+      <h2 className="text-2xl mt-4 mb-2">{event.title}</h2>
+      <p className="text-gray-700 mb-2">Date: {event.date}</p>
+      <p className="text-gray-700 mb-2">Location: {event.location}</p>
+      <p className="text-blue-500 hover:underline">
         URL:{" "}
         <a href={event.url} target="_blank" rel="noopener noreferrer">
           {event.url}
         </a>
       </p>
-      <p>Comments: {event.comments}</p>
+      <p className="text-gray-700">Comments: {event.comments}</p>
     </div>
   );
 }

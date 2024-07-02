@@ -20,7 +20,7 @@ function SignUpForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
       <InputField
         label="Name"
         value={form.name}
@@ -42,8 +42,11 @@ function SignUpForm() {
         name="password"
       />
       <Button type="submit" text="Create account" />
-      <p>
-        Already have an account? <a href="/signin">Sign in</a>
+      <p className="mt-4">
+        Already have an account?{" "}
+        <a href="/signin" className="text-blue-500 hover:underline">
+          Sign in
+        </a>
       </p>
     </form>
   );

@@ -1,22 +1,16 @@
 import React from "react";
-import Navigation from "../common/Navigation";
 import Button from "../common/Button";
 import EventFeed from "./EventFeed";
 
-function HomePagePopulated() {
+function HomePagePopulated({ events }) {
   return (
-    <div>
-      <Navigation isLoggedIn={true} />
-      <div className="create-button">
-        <Button
-          text="Create"
-          onClick={() => alert("Redirect to create event")}
-        />
-      </div>
-      <div className="event-feed">
-        <h2>Event Feed</h2>
-        <EventFeed />
-      </div>
+    <div className="text-center py-4">
+      <Button
+        text="Create"
+        onClick={() => (window.location.href = "/create-event")}
+      />
+      <h2 className="text-2xl mt-4 mb-6">Event Feed</h2>
+      <EventFeed events={events} />
     </div>
   );
 }

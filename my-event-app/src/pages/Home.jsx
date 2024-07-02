@@ -3,9 +3,13 @@ import HomePageEmpty from "../components/HomePage/HomePageEmpty";
 import HomePagePopulated from "../components/HomePage/HomePagePopulated";
 
 function Home() {
-  const events = []; // Assume events array is fetched from an API
+  const events = []; // Fetch your events from an API or state management store
 
-  return events.length === 0 ? <HomePageEmpty /> : <HomePagePopulated />;
+  return events.length === 0 ? (
+    <HomePageEmpty />
+  ) : (
+    <HomePagePopulated events={events} />
+  );
 }
 
 export default Home;
