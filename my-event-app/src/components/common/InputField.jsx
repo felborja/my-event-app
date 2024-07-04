@@ -1,6 +1,6 @@
 import React from "react";
 
-function InputField({ label, type = "text", value, onChange, name }) {
+function InputField({ label, type = "text", value, onChange, name, error }) {
   return (
     <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -11,8 +11,11 @@ function InputField({ label, type = "text", value, onChange, name }) {
         value={value}
         onChange={onChange}
         name={name}
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+          error && "border-red-500"
+        }`}
       />
+      {error && <p className="text-red-500 text-xs italic">{error}</p>}
     </div>
   );
 }
