@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
@@ -10,13 +10,12 @@ import TestEventFeedPage from "./pages/TestEventFeedPage";
 import Layout from "./components/Layout/Layout";
 import LayoutProtected from "./components/Layout/LayoutProtected";
 
-// Mock authentication function
-const isAuthenticated = () => {
-  // Replace with real authentication check logic
-  return true; // or false based on actual authentication status
-};
-
 function AppRouter() {
+  // Authentication logic is here
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!JSON.parse(localStorage.getItem("user"))?.id ?? false
+  );
+
   return (
     <Router>
       <Routes>
@@ -40,7 +39,7 @@ function AppRouter() {
           path="/signin"
           element={
             <Layout>
-              <SignIn />
+              <SignIn setIsLoggedIn={setIsLoggedIn} />
             </Layout>
           }
         />
@@ -55,36 +54,36 @@ function AppRouter() {
         <Route
           path="/home"
           element={
-            isAuthenticated() ? (
+            isLoggedIn ? (
               <LayoutProtected>
                 <Home />
               </LayoutProtected>
             ) : (
-              <SignIn />
+              <SignIn setIsLoggedIn={setIsLoggedIn} />
             )
           }
         />
         <Route
           path="/create-event"
           element={
-            isAuthenticated() ? (
+            isLoggedIn ? (
               <LayoutProtected>
                 <CreateEvent />
               </LayoutProtected>
             ) : (
-              <SignIn />
+              <SignIn setIsLoggedIn={setIsLoggedIn} />
             )
           }
         />
         <Route
           path="/event/:id"
           element={
-            isAuthenticated() ? (
+            isLoggedIn ? (
               <LayoutProtected>
                 <EventDetail />
               </LayoutProtected>
             ) : (
-              <SignIn />
+              <SignIn setIsLoggedIn={setIsLoggedIn} />
             )
           }
         />
