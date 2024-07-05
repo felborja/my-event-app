@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 import CreateEvent from "./pages/CreateEvent";
 import EventDetail from "./pages/EventDetail";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import TestEventFeedPage from "./pages/TestEventFeedPage";
-import Layout from "./components/Layout/Layout";
-import LayoutProtected from "./components/Layout/LayoutProtected";
+import { AuthorizedRoute, UnauthorizedRoute } from "./router";
 
 function AppRouter() {
   // Authentication logic is here
@@ -22,69 +22,67 @@ function AppRouter() {
         <Route
           path="/"
           element={
-            <Layout>
+            <UnauthorizedRoute>
               <Landing />
-            </Layout>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <Layout>
-              <SignUp />
-            </Layout>
+            </UnauthorizedRoute>
           }
         />
         <Route
           path="/signin"
           element={
-            <Layout>
+            <UnauthorizedRoute>
               <SignIn setIsLoggedIn={setIsLoggedIn} />
-            </Layout>
+            </UnauthorizedRoute>
           }
         />
         <Route
-          path="/test-event-feed"
+          path="/signup"
           element={
-            <LayoutProtected>
-              <TestEventFeedPage />
-            </LayoutProtected>
+            <UnauthorizedRoute>
+              <SignUp />
+            </UnauthorizedRoute>
           }
         />
+
         <Route
           path="/home"
           element={
-            isLoggedIn ? (
-              <LayoutProtected>
-                <Home />
-              </LayoutProtected>
-            ) : (
-              <SignIn setIsLoggedIn={setIsLoggedIn} />
-            )
+            <AuthorizedRoute>
+              <Home />
+            </AuthorizedRoute>
           }
         />
         <Route
           path="/create-event"
           element={
-            isLoggedIn ? (
-              <LayoutProtected>
-                <CreateEvent />
-              </LayoutProtected>
-            ) : (
-              <SignIn setIsLoggedIn={setIsLoggedIn} />
-            )
+            <AuthorizedRoute>
+              <CreateEvent />
+            </AuthorizedRoute>
+          }
+        />
+        <Route
+          path="/test-event-feed"
+          element={
+            <AuthorizedRoute>
+              <TestEventFeedPage />
+            </AuthorizedRoute>
           }
         />
         <Route
           path="/event/:id"
           element={
-            isLoggedIn ? (
-              <LayoutProtected>
-                <EventDetail />
-              </LayoutProtected>
-            ) : (
-              <SignIn setIsLoggedIn={setIsLoggedIn} />
-            )
+            <AuthorizedRoute>
+              <EventDetail />
+            </AuthorizedRoute>
+          }
+        />
+        {/** Catch-all route for 404 */}
+        <Route
+          path="*"
+          element={
+            <UnauthorizedRoute>
+              <NotFound />
+            </UnauthorizedRoute>
           }
         />
       </Routes>
