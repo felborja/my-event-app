@@ -1,8 +1,19 @@
+// src/components/LayoutProtected.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Navigation from "../common/Navigation";
 import MinimalFooter from "../common/MinimalFooter";
 
 const LayoutProtected = ({ children }) => {
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/signin");
+    }
+  }, [navigate]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navigation isLoggedIn={true} />

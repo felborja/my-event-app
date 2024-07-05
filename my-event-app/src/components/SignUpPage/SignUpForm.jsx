@@ -1,4 +1,6 @@
+// src/components/SignUpPage/SignUpForm.jsx
 import React, { useState } from "react";
+import axiosInstance from "../../api/axiosInstance";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
 
@@ -14,9 +16,15 @@ function SignUpForm() {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Account created");
+    try {
+      await axiosInstance.post("/users", form);
+      alert("Account created");
+      // Optionally, redirect to sign in page
+    } catch (error) {
+      alert("Error creating account");
+    }
   };
 
   return (

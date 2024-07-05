@@ -1,5 +1,7 @@
+// src/components/SignInPage/SignInForm.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
 
@@ -15,11 +17,18 @@ function SignInForm() {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add authentication logic here
-    alert("Signed in");
-    navigate("/home"); // Redirect to home page after sign-in
+    try {
+      const response = await axiosInstance.post("/auth/login", form);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      console.log(response.data);
+      alert("Signed in");
+      navigate("/home");
+    } catch (error) {
+      alert("Error signing in");
+    }
   };
 
   return (
