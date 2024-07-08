@@ -16,7 +16,15 @@ const LayoutProtected = ({ children }) => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navigation isLoggedIn={true} />
+      <Navigation
+        isLoggedIn={true}
+        onSignOut={() => {
+          if (window.confirm("Are you sure you want to sign out?")) {
+            localStorage.removeItem("authToken");
+            navigate("/");
+          }
+        }}
+      />
       <main className="container mx-auto p-4 flex-grow">{children}</main>
       <MinimalFooter />
     </div>
