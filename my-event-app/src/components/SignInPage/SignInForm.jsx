@@ -24,8 +24,9 @@ function SignInForm({ setIsLoggedIn }) {
     setForm({ ...form, [name]: value });
     setFieldErrors({ ...fieldErrors, [name]: "" });
   };
+
   /**
-   * Validates the form fields to ensure all required fields for filled out.
+   * Validates the form fields to ensure all required fields are filled out.
    * @returns {object} errors - An object containing error messages for each invalid field.
    */
   const validateForm = () => {
@@ -51,6 +52,7 @@ function SignInForm({ setIsLoggedIn }) {
       navigate("/home");
     } catch (error) {
       alert("Error signing in");
+    }
 
     setLoading(true);
     const errors = validateForm();
@@ -99,20 +101,19 @@ function SignInForm({ setIsLoggedIn }) {
       setError("");
       const data = await response.json();
 
-      console.log("Response : ", { data });
-      //let know teammate who is responsible for this part!
+      console.log("Response: ", { data });
+      // let know teammate who is responsible for this part!
       localStorage.setItem("authToken", JSON.stringify(data.token));
       localStorage.setItem("user", JSON.stringify(data.user));
       setIsLoggedIn(true);
       setLoading(false);
 
-      // Sign-in succesful
+      // Sign-in successful
       alert("Signed in");
       navigate("/home"); // Redirect to home page after sign-in
     } catch (error) {
       setLoading(false);
       console.error(error.message);
-
     }
   };
 
