@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
 
@@ -7,19 +8,41 @@ function EventForm() {
     title: "",
     date: "",
     location: "",
-    url: "",
-    comments: "",
+    organizerId: JSON.parse(localStorage.getItem("user")).id,
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
+  function handleChange(e) {
+    const newdata = { ...form };
+    newdata[e.target.name] = e.target.value;
+    setForm(newdata);
+    console.log(newdata);
+  }
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    alert("Event created");
-  };
+    const url = "http://localhost:3002/api/events";
+    axios
+      .post(
+        url,
+        {
+          title: form.title,
+          date: form.date,
+          location: form.location,
+          organizerId: form.organizerId,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        alert("Event created");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Error creating event");
+      });
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -41,18 +64,6 @@ function EventForm() {
         value={form.location}
         onChange={handleChange}
         name="location"
-      />
-      <InputField
-        label="URL"
-        value={form.url}
-        onChange={handleChange}
-        name="url"
-      />
-      <InputField
-        label="Comments"
-        value={form.comments}
-        onChange={handleChange}
-        name="comments"
       />
       <Button type="submit" text="Save" />
     </form>

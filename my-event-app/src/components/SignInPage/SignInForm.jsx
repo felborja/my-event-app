@@ -1,5 +1,7 @@
+// src/components/SignInPage/SignInForm.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
 
@@ -39,6 +41,17 @@ function SignInForm({ setIsLoggedIn }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axiosInstance.post("/auth/login", form);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      console.log(response.data);
+      alert("Signed in");
+      navigate("/home");
+    } catch (error) {
+      alert("Error signing in");
+
     setLoading(true);
     const errors = validateForm();
     // If there are validation errors, set the field errors and stop loading
@@ -99,6 +112,7 @@ function SignInForm({ setIsLoggedIn }) {
     } catch (error) {
       setLoading(false);
       console.error(error.message);
+
     }
   };
 

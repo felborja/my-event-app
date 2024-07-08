@@ -1,4 +1,6 @@
+// src/components/SignUpPage/SignUpForm.jsx
 import React, { useState } from "react";
+import axiosInstance from "../../api/axiosInstance";
 import InputField from "../common/InputField";
 import Button from "../common/Button";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +20,14 @@ function SignUpForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      await axiosInstance.post("/users", form);
+      alert("Account created");
+      // Optionally, redirect to sign in page
+    } catch (error) {
+      alert("Error creating account");
+
 
     // Do the API call and process the result (success / error)
     try {
@@ -55,6 +65,7 @@ function SignUpForm() {
       navigate("/signin"); // Redirect to Sign-in page
     } catch (error) {
       console.error(error.message);
+
     }
   };
 
