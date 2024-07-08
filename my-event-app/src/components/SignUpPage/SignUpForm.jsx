@@ -24,10 +24,10 @@ function SignUpForm() {
     try {
       await axiosInstance.post("/users", form);
       alert("Account created");
-      // Optionally, redirect to sign in page
+      navigate("/signin"); // Optionally, redirect to sign in page
     } catch (error) {
       alert("Error creating account");
-
+    }
 
     // Do the API call and process the result (success / error)
     try {
@@ -58,14 +58,13 @@ function SignUpForm() {
       // Otherwise, we can read the body as JSON
       const data = await response.json();
 
-      console.log("Response : ", { data });
+      console.log("Response: ", { data });
 
-      // Sign-up succesful
+      // Sign-up successful
       alert("Account created");
       navigate("/signin"); // Redirect to Sign-in page
     } catch (error) {
       console.error(error.message);
-
     }
   };
 
